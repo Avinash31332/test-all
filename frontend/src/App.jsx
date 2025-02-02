@@ -11,7 +11,7 @@ import EditData from "./pages/editData";
 import UsesNaturopathy from "./components/UsesNaturopathy";
 import AdminAppointments from "./pages/AdminAppointments";
 import AppointmentOperations from "./pages/AppointmentOperations";
-import CreateAppointment from "./pages/createAppointment";
+import CreateAppointment from "./pages/CreateAppointment";
 
 function App() {
   return (
