@@ -1,0 +1,30 @@
+import nodemailer from 'nodemailer'
+
+
+// Create a transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // e.g., 'hotmail', 'yahoo', or use a custom SMTP server
+  auth: {
+    user: process.env.ADMIN_EMAIL, // Your email
+    pass: process.env.ADMIN_EMAIL_PASS // Your email password (or app-specific password)
+  },
+});
+
+// Email options
+const mailOptions = {
+  from: process.env.ADMIN_EMAIL, // Sender address
+  to: 'avinashviolin4@gmail.com', // List of recipients
+  subject: 'Hello from NodeMailer', // Subject line
+  text: 'This is a plain text email.', // Plain text body
+  html: '<h1>This is an HTML email</h1>', // HTML body (optional)
+};
+
+// Send the email
+transporter.sendMail(mailOptions, (err, info) => {
+  if (err) {
+    console.error('Error:', err);
+  } else {
+    console.log('Email sent:', info.response);
+  }
+});
+

@@ -1,0 +1,317 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+function CreateAppointment() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [age, setAge] = useState("");
+  const [therapies, setTherapies] = useState(" ");
+  const [reason, setReason] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [isSmallScreen, setSmallScreen] = useState(false);
+  //navigation
+  const navigate = useNavigate();
+  useEffect(() => {
+    const handleWidth = () => {
+      setSmallScreen(window.innerWidth <= 750);
+    };
+
+    handleWidth();
+
+    window.addEventListener("resize", handleWidth);
+    return () => window.removeEventListener("resize", handleWidth);
+  }, []);
+
+  const createAppointment = (e) => {
+    e.preventDefault(); // Prevents default form submission behavior
+
+    const createData = {
+      name,
+      email,
+      phone,
+      age,
+      therapies: therapies.split(","),
+      reason,
+      time,
+      date,
+    };
+
+    axios
+      .post("http://localhost:3000/api/appointments/book", createData)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div className="p-4">
+      <form onSubmit={createAppointment}>
+        <div
+          className={`gap-[10px] flex flex-col m-2 p-4 border-2 border-zinc-200 rounded-xl w-[97%]`}
+        >
+          {/* User Details */}
+          <div className="flex justify-evenly">
+            {/* user details-1 */}
+            <div className="flex flex-col">
+              <div className={`flex items-center`}>
+                <p className="text-zinc-600 font-medium text-lg">
+                  Basic Details
+                </p>
+                <p className="p-2 py-1 px-4 m-2 border-2 border-red-400 text-lg text-red-400 rounded-3xl">
+                  required*
+                </p>
+              </div>
+              <div
+                className={`${isSmallScreen ? "w-full" : "flex justify-start"}`}
+              >
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Name:</label>
+                  <input
+                    type="text"
+                    className="p-4 bg-gray-100 rounded-lg m-2 w-full"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Age:</label>
+                  <input
+                    type="number"
+                    min={0}
+                    max={99}
+                    className="p-4 bg-gray-100 rounded-lg m-2 w-full"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* user details-2 */}
+            {isSmallScreen ? (
+              ""
+            ) : (
+              <div className="flex flex-col">
+                <div className="flex items-center">
+                  <p className="text-zinc-600 font-medium text-lg">
+                    Book your Slot
+                  </p>
+                  <p className="p-2 py-1 px-4 m-2 border-2 border-red-400 text-lg text-red-400 rounded-3xl">
+                    required*
+                  </p>
+                </div>
+                <div className="flex">
+                  <div className="flex items-center gap-[10px]">
+                    <label className="font-medium">Date:</label>
+                    <input
+                      type="date"
+                      className="rounded-lg border-2 m-4 text-medium p-4 m-2"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-[10px]">
+                    <label className="font-medium">Time:</label>
+                    <input
+                      type="time"
+                      className="rounded-lg border-2 m-4 text-medium p-4 m-2"
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <hr className="text-zinc-900" />
+
+          {/* Contact details */}
+
+          <div className="flex justify-evenly">
+            {/* user details-1 */}
+            <div className="flex flex-col">
+              <div className={`flex items-center`}>
+                <p className="text-zinc-600 font-medium text-lg">
+                  Contact Details
+                </p>
+                <p className="p-2 py-1 px-4 m-2 border-2 border-red-400 text-lg text-red-400 rounded-3xl">
+                  required*
+                </p>
+              </div>
+              <div
+                className={`${isSmallScreen ? "w-full" : "flex justify-start"}`}
+              >
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Phone:</label>
+                  <input
+                    type="text"
+                    className="p-4 bg-gray-100 rounded-lg m-2 w-full"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    maxLength={10}
+                  />
+                </div>
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Email:</label>
+                  <input
+                    type="email"
+                    className="p-4 bg-gray-100 rounded-lg m-2 w-full"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* user details-2 */}
+            {isSmallScreen ? (
+              ""
+            ) : (
+              <div className="flex flex-col">
+                <div className="flex items-center">
+                  <p className="text-zinc-600 font-medium text-lg">
+                    Reasons and Preferences
+                  </p>
+                  {/* <p className="p-2 py-1 px-4 m-2 border-2 border-red-400 text-lg text-red-400 rounded-3xl">
+                    required*
+                  </p> */}
+                </div>
+                <div className="flex">
+                  <div className="flex items-center gap-[10px]">
+                    <label className="font-medium">Needed Therapies:</label>
+                    <input
+                      type="text"
+                      className="rounded-lg border-2 m-4 text-medium p-4 m-2"
+                      value={therapies}
+                      onChange={(e) => setTherapies(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-[10px]">
+                    <label className="font-medium">Reason:</label>
+                    <input
+                      type="text"
+                      className="rounded-lg border-2 m-4 text-medium p-4 m-2"
+                      value={reason}
+                      onChange={(e) => setReason(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Contact Details */}
+          {/* <div>
+            <div className="flex items-center">
+              <p className="text-zinc-600 font-medium text-lg">
+                Contact Details
+              </p>
+              <p className="p-2 py-1 px-4 m-2 border-2 border-red-400 text-lg text-red-400 rounded-3xl">
+                required*
+              </p>
+            </div>
+            <div
+              className={`${isSmallScreen ? "w-full" : "flex justify-start"}`}
+            >
+              <div className="flex items-center gap-[10px]">
+                <label className="font-medium">Phone:</label>
+                <input
+                  type="text"
+                  className="p-4 bg-gray-100 rounded-lg m-2 w-full"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+              <div className="flex items-center gap-[10px]">
+                <label className="font-medium">Email:</label>
+                <input
+                  type="text"
+                  className="p-4 bg-gray-100 rounded-lg m-2 w-full"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+          </div> */}
+          <hr />
+
+          {/* Requested Timings */}
+          {isSmallScreen ? (
+            <div>
+              <div>
+                <div className="flex items-center">
+                  <p className="text-zinc-600 font-medium text-lg">
+                    Book your Slot
+                  </p>
+                  <p className="p-2 py-1 px-4 m-2 border-2 border-red-400 text-lg text-red-400 rounded-3xl">
+                    required*
+                  </p>
+                </div>
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Date:</label>
+                  <input
+                    type="date"
+                    className="rounded-lg border-2 m-4 text-medium p-4 m-2"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </div>
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Time:</label>
+                  <input
+                    type="time"
+                    className="rounded-lg border-2 m-4 text-medium p-4 m-2"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                  />
+                </div>
+              </div>
+              <hr />
+
+              {/* Reason and Preferences */}
+              <div>
+                <p className="text-zinc-600 font-medium text-lg">
+                  Reason and Preferences
+                </p>
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Needed Therapies:</label>
+                  <input
+                    type="text"
+                    className="p-4 bg-gray-100 rounded-lg m-2"
+                    value={therapies}
+                    onChange={(e) => setTherapies(e.target.value)}
+                  />
+                </div>
+                <div className="flex items-center gap-[10px]">
+                  <label className="font-medium">Reason:</label>
+                  <input
+                    type="text"
+                    className="p-4 bg-gray-100 rounded-lg m-2"
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <div className="p-4 flex items-center justify-center w-full h-32">
+          <button className="text-xl bg-green-900 text-white p-4 px-8 rounded-xl border-2 border-green-900 hover:text-green-900 hover:bg-transparent">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default CreateAppointment;

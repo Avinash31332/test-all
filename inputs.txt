@@ -1,0 +1,38 @@
+admin----
+date
+time
+status
+description
+
+admin page----
+options- name,age,gender,therapies,reason
+editable- date,time
+email type- success,re-schedule,cancel,pending
+email-custom
+
+client----
+name
+age
+Phone number
+gender
+date
+time
+therapies
+reason
+
+
+
+
+
+        {/* <button className="p-4 m-2 text-lg rounded bg-green-400 py-2 px-8 text-white">
+          Accept
+        </button>
+        <button className="p-4 m-2 text-lg rounded bg-orange-400 py-2 px-8 text-white">
+          Re-schedule
+        </button>
+        <button className="p-4 m-2 text-lg rounded bg-red-400 py-2 px-8 text-white">
+          Cancel
+        </button>
+        <button className="p-4 m-2 text-lg rounded bg-gray-300 py-2 px-8 text-white">
+          Custom
+        </button> */}
