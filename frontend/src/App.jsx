@@ -7,7 +7,7 @@ import TherapyOperations from "./pages/TherapyOperations";
 import Navbar from "./components/Navbar";
 import CreateTherapy from "./pages/CreateTherapy";
 import NewTest from "./pages/NewTest";
-import EditData from "./pages/editData";
+import EditData from "./pages/EditData";
 import UsesNaturopathy from "./components/UsesNaturopathy";
 import AdminAppointments from "./pages/AdminAppointments";
 import AppointmentOperations from "./pages/AppointmentOperations";
